@@ -1,0 +1,49 @@
+RANDOM FOREST
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+data = pd.read_csv('/home/exam/Downloads/B3-pima.csv')
+-
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
+from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+#import pandas_profiling
+from matplotlib import rcParams
+import warnings
+data.columns
+-
+data.sample(5)
+-
+X=data.drop("Outcome",axis=1)
+y=data["Outcome"]
+scaler=StandardScaler()
+X_scaled=scaler.fit_transform(X)
+X_train,X_test,Y_train,Y_test=train_test_split(X_scaled,y,stratify=y,test_size=0.10,random_state=34)
+classifier = RandomForestClassifier(n_estimators=100)
+classifier.fit(X_train,Y_train)
+-
+y_pred = classifier.predict(X_test)
+print("Accuracy:",accuracy_score(Y_test,y_pred))
+-
+feature_importances_df = pd.DataFrame(
+ {"feature":list(X.columns),"importance":classifier.feature_importances_}
+).sort_values("importance",ascending=False)
+feature_importances_df
+-
+from sklearn.tree import DecisionTreeClassifier
+clf=DecisionTreeClassifier()
+clf.fit(X_train,Y_train)
+Y_pred = clf.predict(X_test)
+from sklearn.metrics import accuracy_score
+print("Accuracy-DecisionTree :",accuracy_score(Y_test,Y_pred))
+-
+import matplotlib.pyplot as plt
+from sklearn.tree import plot_tree
+# Assuming you have already trained a Decision Tree classifier (dt_classifier)
+plt.figure(figsize=(12, 8))
+plot_tree(clf, filled=True, rounded=True)
+plt.show()
