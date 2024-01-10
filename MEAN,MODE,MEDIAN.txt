@@ -1,0 +1,85 @@
+MEAN,MODE,MEDIAN
+
+x=[115.3, 195.5, 120.5, 110.2, 90.4, 105.6, 110.9, 116.3, 122.3, 125.4,90.4]
+-
+mean = sum(x) / len(x)
+-
+mean
+-
+import statistics
+-
+print(statistics.mean(x))
+-
+x.sort()
+-
+x
+-
+n=len(x)
+-
+if n% 2 == 0:
+ median1 = x[n//2]
+ median2 = x[n//2 - 1]
+ median = (median1 + median2)/2
+else:
+ median = x[n//2]
+print("Median is: " + str(median))
+-
+print(statistics.median(x))
+-
+#mode
+X=(115.3, 195.5, 120.5, 110.2, 90.4, 105.6, 110.9, 116.3, 122.3, 125.4, 90.4)
+d={}
+for i in X:
+ if i in d:
+ d[i]=d[i]+1
+ else:
+ d[i]=1
+max=0
+for i in d:
+ if(d[i]>max):
+ max=d[i]
+ ans=i
+print("MODE",ans) 
+-
+variance = sum((i - mean) ** 2 for i in x) / (n-1)
+-
+variance
+-
+print(statistics.variance(x))
+-
+standarddev= variance ** 0.5
+-
+standarddev
+-
+print(statistics.stdev(x))
+-
+#normalization
+def nor(l):
+ min=l[0]
+ max=l[0]
+ for i in l:
+ if(i>max):
+ max=i
+ elif(i<min):
+ min=i
+ 
+ for i in l:
+ print((i-min)/(max-min))
+ 
+l=(115.3, 195.5, 120.5, 110.2, 90.4, 105.6, 110.9, 116.3, 122.3, 125.4,90.4)
+nor(l)
+-
+#STANDARDIZATION
+import numpy as np
+def std(lst):
+ mean_val = np.mean(lst)
+ sd_val = np.std(lst)
+ 
+ standardized_list = [(x - mean_val) / sd_val for x in lst]
+ 
+ return standardized_list
+# Example usage
+data_list = [115.3, 195.5, 120.5, 110.2, 90.4, 105.6, 110.9, 116.3, 122.3, 125.4, 
+90.4]
+result = std(data_list)
+print(result)
